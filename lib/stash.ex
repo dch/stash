@@ -24,6 +24,16 @@ defmodule Stash do
   def empty, do: @empty
 
   def put(stash, key, value) do
-  [{key, value} | stash]
+    [{key, value} | stash]
+  end
+
+  @doc """
+  there are many ways to implement get/2
+  - we can use pattern matching & recursion (if this is a list)
+  - we can use a built in function from the lists module
+  - we can use Enum functions
+  """
+  def get(_stash, key) do
+    {@empty, key}
   end
 end
