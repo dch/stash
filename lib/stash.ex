@@ -18,6 +18,12 @@ defmodule Stash do
     @empty
   end
 
+  @doc """
+  test helper only, avoids leaking implementation details to test module
+  """
   def empty, do: @empty
 
+  def put(stash, key, value) do
+  [{key, value} | stash]
+  end
 end
