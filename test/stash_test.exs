@@ -45,10 +45,11 @@ defmodule StashTest do
     test "inserting a key, value pair and removing it results in the original list" do
       stash = Stash.init()
       modified_stash = stash |> Stash.put("key1", "value1") |> Stash.put("key2", "value2")
-      {new_stash, _removed(_(value))} = modified_stash |> Stash.remove("key1")
+      {new_stash, _removed _ value} = modified_stash |> Stash.remove("key1")
 
       assert stash == new_stash
     end
+
 
     test "retrieving a non-existing item results in nil" do
       stash = Stash.init() |> Stash.put("key1", "value1") |> Stash.put("key2", "value2")
