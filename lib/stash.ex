@@ -32,8 +32,25 @@ defmodule Stash do
   - we can use pattern matching & recursion (if this is a list)
   - we can use a built in function from the lists module
   - we can use Enum functions
+
   """
-  def get(_stash, key) do
-    {@empty, key}
+  def get([], _) do
+    {@empty, nil}
+  end
+
+  def get(stash, key) do
+    List.keytake(stash, key, 0)
+  end
+
+  def delete(stash, key) do
+    case List.keytake(stash, key, 0) do
+      nil ->
+        # No item found, return unmodified stash, and nil
+        {@empty, nil}
+
+      # removed {found_item, remainder} ->
+      {{_key, value}, tail} ->
+        {tail, value}
+    end
   end
 end

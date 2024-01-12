@@ -34,5 +34,28 @@ defmodule StashTest do
       {stash, _} = Stash.init() |> Stash.get("key")
       assert Stash.empty() == stash
     end
+
+    test "removing an item makes a shorter list" do
+      stash = Stash.init() |> Stash.put("key1", "value1") |> Stash.put("key2", "value2")
+      {new_stash, _removed_value} = stash |> Stash.delete("key1")
+
+      assert stash == [{"key2", "value2"}]
+    end
+
+    test "inserting a key, value pair and removing it results in the original list" do
+      stash = Stash.init()
+      modified_stash = stash |> Stash.put("key1", "value1") |> Stash.put("key2", "value2")
+      {new_stash, _removed(_(value))} = modified_stash |> Stash.remove("key1")
+
+      assert stash == new_stash
+    end
+
+    test "retrieving a non-existing item results in nil" do
+      stash = Stash.init() |> Stash.put("key1", "value1") |> Stash.put("key2", "value2")
+      {result_stash, retrieved_value} = stash |> Stash.get("pretend_key")
+
+      assert retrieved_value == nil
+      assert stash == result_stash
+    end
   end
 end
