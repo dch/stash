@@ -1,11 +1,11 @@
 # Stash
 
-**TODO: Add description**
+A small key-value store tutorial.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `stash` to your list of dependencies in `mix.exs`:
+- install Elixir 1.15.7 or newer
+- ensure you have Erlang/OTP 25 or newer
 
 ```elixir
 def deps do
