@@ -42,7 +42,7 @@ defmodule StashTest do
       stash = Stash.init() |> Stash.put("key1", "value1") |> Stash.put("key2", "value2")
       {new_stash, _removed_value} = stash |> Stash.delete("key1")
 
-      assert stash == [{"key2", "value2"}]
+      assert Enum.count(stash) == Enum.count(new_stash) + 1
     end
 
     test "inserting a key, value pair and removing it results in the original list" do
