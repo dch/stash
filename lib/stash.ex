@@ -39,7 +39,13 @@ defmodule Stash do
   end
 
   def get(stash, key) do
-    List.keytake(stash, key, 0)
+    case List.keytake(stash, key, 0) do
+      nil ->
+        {stash, nil}
+
+      {{_key, value}, _tail} ->
+        {stash, value}
+    end
   end
 
   def delete(stash, key) do

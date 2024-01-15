@@ -25,9 +25,12 @@ defmodule StashTest do
       assert "value" == value
     end
 
-    test "get/2 should return the empty stash after fetching an item" do
-      {stash, _} = Stash.init() |> Stash.put("key", "value") |> Stash.get("key")
-      assert Stash.empty() == stash
+    test "get/2 should return the stash unchanged after fetching an item" do
+      stash = Stash.init() |> Stash.put("key1", "value1")
+      {result_stash, retrieved_value} = stash |> Stash.get("key1")
+
+      assert retrieved_value == "value1"
+      assert stash == result_stash
     end
 
     test "get/2 should return the empty stash even if the stash was empty" do
@@ -43,15 +46,15 @@ defmodule StashTest do
     end
 
     test "inserting a key, value pair and removing it results in the original list" do
-      stash = Stash.init()
-      modified_stash = stash |> Stash.put("key1", "value1") |> Stash.put("key2", "value2")
-      {new_stash, _removed _ value} = modified_stash |> Stash.remove("key1")
+      stash = Stash.init() |> Stash.put("key1", "value1")
+      modified_stash = stash |> Stash.put("key2", "value2")
 
-      assert stash == new_stash
+
+      assert {stash, "value2"} == modified_stash |> Stash.delete("key2")
+
     end
 
-
-    test "retrieving a non-existing item results in nil" do
+    test "retrieving a non-existing item results in nil and ensures stash remains unchanged" do
       stash = Stash.init() |> Stash.put("key1", "value1") |> Stash.put("key2", "value2")
       {result_stash, retrieved_value} = stash |> Stash.get("pretend_key")
 
