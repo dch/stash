@@ -25,14 +25,39 @@ defmodule StashTest do
       assert "value" == value
     end
 
-    test "get/2 should return the empty stash after fetching an item" do
-      {stash, _} = Stash.init() |> Stash.put("key", "value") |> Stash.get("key")
-      assert Stash.empty() == stash
+    test "get/2 should return the stash unchanged after fetching an item" do
+      stash = Stash.init() |> Stash.put("key1", "value1")
+      {result_stash, retrieved_value} = stash |> Stash.get("key1")
+
+      assert retrieved_value == "value1"
+      assert stash == result_stash
     end
 
     test "get/2 should return the empty stash even if the stash was empty" do
       {stash, _} = Stash.init() |> Stash.get("key")
       assert Stash.empty() == stash
+    end
+
+    test "removing an item makes a shorter list" do
+      stash = Stash.init() |> Stash.put("key1", "value1") |> Stash.put("key2", "value2")
+      {new_stash, _removed_value} = stash |> Stash.delete("key1")
+
+      assert Enum.count(stash) - 1 == Enum.count(new_stash)
+    end
+
+    test "inserting a key, value pair and removing it results in the original list" do
+      stash = Stash.init() |> Stash.put("key1", "value1")
+      modified_stash = stash |> Stash.put("key2", "value2")
+
+      assert {stash, "value2"} == modified_stash |> Stash.delete("key2")
+    end
+
+    test "retrieving a non-existing item results in nil and ensures stash remains unchanged" do
+      stash = Stash.init() |> Stash.put("key1", "value1") |> Stash.put("key2", "value2")
+      {result_stash, retrieved_value} = stash |> Stash.get("pretend_key")
+
+      assert retrieved_value == nil
+      assert stash == result_stash
     end
   end
 end
