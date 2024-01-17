@@ -48,6 +48,12 @@ defmodule Stash do
     end
   end
 
+  @doc """
+  takes a stash and a key, will return a tuple comprising either
+  {original stash, nil} if the key was not found, or a tuple
+  comprising the modified stash, less the found element element,
+  and the value from the associated key.
+  """
   def delete(stash, key) do
     case List.keytake(stash, key, 0) do
       nil ->
