@@ -1,6 +1,6 @@
 # Stash
 
-**TODO: Add description**
+A great place to keep your stuff.
 
 ## Installation
 
