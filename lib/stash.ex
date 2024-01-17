@@ -27,10 +27,10 @@ defmodule Stash do
   ## Examples
 
       iex> Stash.put(Stash.init(), :foo, "bar")
-      [{:foo, "bar"}]
+      %{foo: "bar"}
   """
   def put(stash, key, value) do
-    [{key, value} | stash]
+    Map.put(stash, key, value)
   end
 
   @doc """
