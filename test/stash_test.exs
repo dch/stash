@@ -60,4 +60,16 @@ defmodule StashTest do
       assert stash == result_stash
     end
   end
+
+  describe "property tests: " do
+    test "adding an item twice does not change stash size" do
+      s = Stash.init() |> Stash.put(:k, :v) |> Stash.put(:k, :v)
+      assert Enum.count(s) == 1
+    end
+
+    test "adding a key twice with different values does not change size of stash" do
+      s = Stash.init() |> Stash.put(:k, :v) |> Stash.put(:k, :other)
+      assert Enum.count(s) == 1
+    end
+  end
 end
