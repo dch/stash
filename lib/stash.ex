@@ -1,68 +1,68 @@
 defmodule Stash do
   @moduledoc """
-  Documentation for `Stash`, a simple key-value store.
+  Stash is a simple key-value store.
   """
 
   @empty []
 
+  @doc false
+  def empty, do: @empty
+
   @doc """
-  Bring Forth Thy Stash, In Alle Its Glorie
+  Bring Forth Thy Stash, In Alle Its Empty Glorie
 
   ## Examples
 
       iex> Stash.init()
       []
-
   """
   def init do
     @empty
   end
 
   @doc """
-  test helper only, avoids leaking implementation details to test module
-  """
-  def empty, do: @empty
+  Put a value into the stash, stored under the given key, and return
+  the updated stash.
 
+  ## Examples
+
+      iex> Stash.put(Stash.init(), :foo, "bar")
+      [{:foo, "bar"}]
+  """
   def put(stash, key, value) do
     [{key, value} | stash]
   end
 
   @doc """
-  there are many ways to implement get/2
-  - we can use pattern matching & recursion (if this is a list)
-  - we can use a built in function from the lists module
-  - we can use Enum functions
+  Delete a key value pair from the stash, returning the updated stash.
+  If the key is not found, the original stash is returned.
 
+  ## Examples
+
+      iex> Stash.delete(Stash.init(), :foo)
+      {[], nil}
+
+      iex> Stash.init() |> Stash.put(:foo, "bar") |> Stash.delete(:foo)
+      {[], "bar"}
   """
-  def get([], _) do
-    {@empty, nil}
-  end
-
-  def get(stash, key) do
-    case List.keytake(stash, key, 0) do
-      nil ->
-        {stash, nil}
-
-      {{_key, value}, _tail} ->
-        {stash, value}
+  def delete(stash, key) do
+    case List.keyfind(stash, key, 0) do
+      nil -> {stash, nil}
+      {^key, value} -> {List.keydelete(stash, key, 0), value}
     end
   end
 
   @doc """
-  takes a stash and a key, will return a tuple comprising either
-  {original stash, nil} if the key was not found, or a tuple
-  comprising the modified stash, less the found element element,
-  and the value from the associated key.
+  Fetch the value for a given key, from the stash, without modifying it.
+  If the key is not found, return nil and the unmodified stash.
   """
-  def delete(stash, key) do
-    case List.keytake(stash, key, 0) do
-      nil ->
-        # No item found, return unmodified stash, and nil
-        {@empty, nil}
 
-      # removed {found_item, remainder} ->
-      {{_key, value}, tail} ->
-        {tail, value}
+  def get([], _), do: {@empty, nil}
+
+  def get(stash, key) do
+    case List.keyfind(stash, key, 0) do
+      nil -> {stash, nil}
+      {^key, value} -> {stash, value}
     end
   end
 end
