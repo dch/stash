@@ -40,15 +40,15 @@ defmodule Stash do
   ## Examples
 
       iex> Stash.delete(Stash.init(), :foo)
-      {[], nil}
+      {%{}, nil}
 
       iex> Stash.init() |> Stash.put(:foo, "bar") |> Stash.delete(:foo)
-      {[], "bar"}
+      {%{}, "bar"}
   """
   def delete(stash, key) do
-    case List.keyfind(stash, key, 0) do
-      nil -> {stash, nil}
-      {^key, value} -> {List.keydelete(stash, key, 0), value}
+    case Map.fetch(stash, key) do
+      :error -> {stash, nil}
+      {:ok, value} -> { Map.delete(stash, key), value }
     end
   end
 
