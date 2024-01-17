@@ -3,7 +3,7 @@ defmodule Stash do
   Stash is a simple key-value store.
   """
 
-  @empty []
+  @empty %{}
 
   @doc false
   def empty, do: @empty
@@ -14,7 +14,7 @@ defmodule Stash do
   ## Examples
 
       iex> Stash.init()
-      []
+      %{}
   """
   def init do
     @empty
