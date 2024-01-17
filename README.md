@@ -1,6 +1,6 @@
 # Stash
 
-A small key-value store tutorial.
+A great place to keep your stuff.
 
 ## Installation
 
