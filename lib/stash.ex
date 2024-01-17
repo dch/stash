@@ -57,12 +57,8 @@ defmodule Stash do
   If the key is not found, return nil and the unmodified stash.
   """
 
-  def get([], _), do: {@empty, nil}
-
-  def get(stash, key) do
-    case List.keyfind(stash, key, 0) do
-      nil -> {stash, nil}
-      {^key, value} -> {stash, value}
-    end
+  def get(stash, key) when is_map(stash) do
+  # Map.get/3 returns nil when the key is not found
+  {stash, Map.get(stash, key)}
   end
 end
