@@ -11,4 +11,6 @@ jobs:
           otp-version: 26.x
           elixir-version: 1.16.x
       - run: mix deps.get
+      - run: mix do format --check-formatted, dialyzer
+      - run: mix credo --strict
       - run: mix test
