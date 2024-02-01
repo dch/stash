@@ -48,7 +48,7 @@ defmodule Stash do
   def delete(stash, key) do
     case Map.fetch(stash, key) do
       :error -> {stash, nil}
-      {:ok, value} -> { Map.delete(stash, key), value }
+      {:ok, value} -> {Map.delete(stash, key), value}
     end
   end
 
@@ -58,7 +58,7 @@ defmodule Stash do
   """
 
   def get(stash, key) when is_map(stash) do
-  # Map.get/3 returns nil when the key is not found
-  {stash, Map.get(stash, key)}
+    # Map.get/3 returns nil when the key is not found
+    {stash, Map.get(stash, key)}
   end
 end
