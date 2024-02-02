@@ -1,33 +1,44 @@
 ---
-name: CI
-on: push
+name: ci
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main", "feature/*" ]
+
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: erlef/setup-beam@v1
+      - name: fetch source
+        uses: actions/checkout@v4
+
+      - name: setup compilers
+        uses: erlef/setup-beam@v1
         with:
           otp-version: 26.x
           elixir-version: 1.16.x
-      - uses: actions/cache@v3
-        env:
-          cache-name: cache-elixir-deps
-          with:
-            path: deps
-            key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-            restore-keys: |
-              ${{ runner.os }}-mix-${{ env.cache-name }}-
-      - uses: actions/cache@v3
-        env:
-          cache-name: cache-compiled-build
+
+      - name: cache dependencies
+        uses: actions/cache@v4
         with:
-          path: _build
-          key: ${{ runner.os }}-mix-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-mix-${{ env.cache-name }}-
-            ${{ runner.os }}-mix-
-      - run: mix deps.get
-      - run: mix do format --check-formatted, dialyzer
-      - run: mix credo --strict
-      - run: mix test
+          path: |
+            deps
+            _build
+          key: ${{ runner.os }}-${{ hashFiles('mix.*') }}
+
+      - name: fetch dependencies
+        run: mix deps.get
+
+      - name: compile
+        run: mix compile
+
+      - name: run linters
+        run: mix do format --check-formatted, dialyzer, credo --strict
+
+      - name: run tests
+        run: mix test
