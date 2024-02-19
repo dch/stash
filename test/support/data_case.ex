@@ -18,6 +18,7 @@ defmodule Stash.DataCase do
 
   using do
     quote do
+      alias Ecto.Adapters.SQL
       alias Stash.Repo
 
       import Ecto
