@@ -11,13 +11,13 @@ config :stash, Stash.Repo,
   hostname: "localhost",
   database: "stash_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
-  pool_size: 10
+  pool_size: System.schedulers_online() * 2
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
 config :stash, StashWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "EGSmGPWbB9zFoEHBBYkQf2OHqPAUK7YSgIgpRjmbB5Ev2H5w43RVEK9Ur48jBy7T",
+  secret_key_base: "t02vo7XXVJU7cj3664Ae+NWBUVByAj4KixmF+x40hETgN1SGBidU6w+sMWhlyBPG",
   server: false
 
 # In test we don't send emails.

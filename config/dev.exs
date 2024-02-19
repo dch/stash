@@ -23,9 +23,9 @@ config :stash, StashWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "xUJZBiBjLetfgnYHoMZFdhPu/dPg96783xIXYU5V7pumtW7cZTfF6M/j+speur75",
+  secret_key_base: "Yc8K/6SF2mWDqMAsCCT4xp6EAdPVtIwCUmIRixYKm6szcNKN4EuNe8Z0R6Cko26M",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:stash, ~w(--sourcemap=inline --watch)]}
   ]
 
 # ## SSL Support
@@ -55,7 +55,7 @@ config :stash, StashWeb.Endpoint,
 config :stash, StashWeb.Endpoint,
   live_reload: [
     patterns: [
-      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
+      ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/stash_web/(controllers|live|components)/.*(ex|heex)$"
     ]

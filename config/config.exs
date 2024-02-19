@@ -14,13 +14,13 @@ config :stash,
 # Configures the endpoint
 config :stash, StashWeb.Endpoint,
   url: [host: "localhost"],
-  adapter: Phoenix.Endpoint.Cowboy2Adapter,
+  adapter: Bandit.PhoenixAdapter,
   render_errors: [
     formats: [html: StashWeb.ErrorHTML, json: StashWeb.ErrorJSON],
     layout: false
   ],
   pubsub_server: Stash.PubSub,
-  live_view: [signing_salt: "ZoScQgIj"]
+  live_view: [signing_salt: "cqoJn1zH"]
 
 # Configures the mailer
 #
@@ -34,7 +34,7 @@ config :stash, Stash.Mailer, adapter: Swoosh.Adapters.Local
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",
-  default: [
+  stash: [
     args:
       ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
