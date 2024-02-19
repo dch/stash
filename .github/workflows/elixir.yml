@@ -11,6 +11,18 @@ permissions:
 
 jobs:
   test:
+    services:
+      db:
+        image: postgres:16
+        ports: ['5432:5432']
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     runs-on: ubuntu-latest
 
     steps:
@@ -32,13 +44,13 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('mix.*') }}
 
       - name: fetch dependencies
-        run: mix deps.get
+        run: mix deps.get --all
 
       - name: compile
-        run: mix compile
+        run: make build
 
       - name: run linters
-        run: mix do format --check-formatted, dialyzer, credo --strict
+        run: make lint
 
       - name: run tests
-        run: mix test
+        run: make test
