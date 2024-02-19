@@ -8,6 +8,7 @@ defmodule Stash.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      Stash.Server,
       StashWeb.Telemetry,
       Stash.Repo,
       {DNSCluster, query: Application.get_env(:stash, :dns_cluster_query) || :ignore},
