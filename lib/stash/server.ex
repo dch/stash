@@ -1,5 +1,6 @@
 defmodule Stash.Server do
   use GenServer
+  require Logger
 
   @moduledoc """
   Provides a stateful wrapper around a Stash instance.
@@ -32,6 +33,7 @@ defmodule Stash.Server do
 
   @impl GenServer
   def init(_opts) do
+    Logger.info("Starting Stash Server")
     Process.register(self(), __MODULE__)
     {:ok, Stash.init()}
   end
