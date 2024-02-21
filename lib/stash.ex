@@ -61,4 +61,12 @@ defmodule Stash do
     # Map.get/3 returns nil when the key is not found
     {stash, Map.get(stash, key)}
   end
+
+  @doc """
+  Function to return entire contents of stash as a list
+
+  """
+  def list(stash) when is_map(stash) do
+    Map.to_list(stash)
+  end
 end

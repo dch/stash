@@ -59,6 +59,18 @@ defmodule StashTest do
       assert retrieved_value == nil
       assert stash == result_stash
     end
+
+    test "list should return entire contents of stash as a list" do
+      stash =
+        Stash.init()
+        |> Stash.put("key", "value")
+        |> Stash.put("greeting", "hello")
+        |> Stash.put("toy", "car")
+
+      list = Stash.list(stash)
+      assert Enum.count(stash) == Enum.count(list)
+      assert is_list(list)
+    end
   end
 
   describe "property tests: " do
