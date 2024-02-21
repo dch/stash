@@ -26,4 +26,8 @@ defmodule StashServerTest do
     assert :ok == Server.delete(k)
     assert Server.get(k) == nil
   end
+
+  test "list/1 returns entire stash as list" do
+    assert is_list(Server.list())
+  end
 end
