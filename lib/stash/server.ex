@@ -35,7 +35,12 @@ defmodule Stash.Server do
   def init(_opts) do
     Logger.info("Starting Stash Server")
     Process.register(self(), __MODULE__)
-    {:ok, Stash.init()}
+
+    {:ok,
+     Stash.init()
+     |> Stash.put("key", "value")
+     |> Stash.put("greeting", "hello")
+     |> Stash.put("toy", "car")}
   end
 
   @impl GenServer
