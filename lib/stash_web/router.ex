@@ -18,6 +18,9 @@ defmodule StashWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/stash", StashController, :index
+    post "/stash/new", StashController, :create
+    get "/stash/delete/:key", StashController, :delete
   end
 
   # Other scopes may use custom stacks.
