@@ -25,7 +25,8 @@ config :stash, StashWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "Yc8K/6SF2mWDqMAsCCT4xp6EAdPVtIwCUmIRixYKm6szcNKN4EuNe8Z0R6Cko26M",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:stash, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:stash, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:stash, ~w(--watch)]}
   ]
 
 # ## SSL Support
